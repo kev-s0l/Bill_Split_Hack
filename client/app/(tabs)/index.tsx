@@ -1,23 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-export default function Home() {
+import { View, Text, StyleSheet } from 'react-native'
+const app = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome to Bill Split App - Tabs Section</Text>
+    <View>
+      <Text>Coffee Shop</Text>
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
+export default app
+
+const styles = StyleSheet.create( {
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  text: {
-    fontSize: 20,
-    color: 'black',
-  },
-});
+    flex: 1
+  }
+}) 
