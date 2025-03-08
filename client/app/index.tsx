@@ -14,6 +14,9 @@ export default function MenuScreen() {
         const totalBill = parseFloat(numberInput);
         const groupSize = parseInt(groupSizeInput);
         const tip = tipAmount ?? 0;
+        router.push({
+            pathname: '/payments',
+        });
     };
     
 
@@ -45,7 +48,7 @@ export default function MenuScreen() {
                         key={tip}
                         style={[
                             styles.tipButton,
-                            tipAmount === tip && styles.selectedTipButton,
+                            parseInt(tipAmount) === tip && styles.selectedTipButton,
                         ]}
                         onPress={() => setTipAmount(tip)}
                     >
@@ -56,7 +59,7 @@ export default function MenuScreen() {
 
             {/* Submit Button */}
             <View style={styles.buttonContainer}>
-                <Button title="SUBMIT" onPress={payments} color="#28a745" />
+                <Button title="SUBMIT" onPress={handlePress} color="#28a745" />
             </View>
         </View>
     );

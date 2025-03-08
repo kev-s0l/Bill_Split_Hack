@@ -50,7 +50,6 @@ const PaymentProcessingScreen = () => {
             value={person.amountOwed}
             onChangeText={(text) => handleInputChange(person.id, 'amountOwed', text)}
           />
-          <
         </View>
       ))}
 
