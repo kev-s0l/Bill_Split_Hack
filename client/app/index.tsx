@@ -11,9 +11,6 @@ export default function MenuScreen() {
   const router = useRouter();
 
     const handlePress = () => {
-        const totalBill = parseFloat(numberInput);
-        const groupSize = parseInt(groupSizeInput);
-        const tip = tipAmount ?? 0;
         router.push({
             pathname: '/payments',
         });

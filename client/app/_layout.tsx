@@ -7,7 +7,6 @@ export default function Layout() {
         name="index"
         options={{ headerTitle: '' }} // Set title specifically for the index screen
       />
-
       <Stack.Screen
         name = "payments"
         options={{headerTitle: 'Payment'}}
