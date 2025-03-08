@@ -2,9 +2,6 @@
   This page will receive input from the 'Bill Page' 
     - Group Size: Determine how many boxes will be created 
     - Total Amount: Total amount of money from Bill, including Tip, Tax 
-    - 
-  
-  
   Need to do:
   - Connect the button to send messages (Adrian said this might not work)
   - Input size from 'Bill' page 
