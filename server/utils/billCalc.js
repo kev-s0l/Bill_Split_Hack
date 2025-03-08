@@ -7,4 +7,11 @@ const evenSplitBill = (totalamount, people) => {
     }));
 };
 
-console.log(evenSplitBill(60, ))
+const customSplitBill = (people) => {
+    return people.map(person => ({
+        ...person,
+        amountOwed: parseFloat(person.amountOwed).toFixed(2)
+    }));
+};
+
+module.exports = {evenSplitBill, customSplitBill };
