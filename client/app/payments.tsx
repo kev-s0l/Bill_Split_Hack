@@ -1,10 +1,24 @@
+/* Payment Page
+  This page will receive input from the 'Bill Page' 
+    - Group Size: Determine how many boxes will be created 
+    - Total Amount: Total amount of money from Bill, including Tip, Tax 
+    - 
+  
+  
+  Need to do:
+  - Connect the button to send messages (Adrian said this might not work)
+  - Input size from 'Bill' page 
+*/
 import React, { useState } from 'react';
 import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
+// Temporary People Stored for now
 const PaymentProcessingScreen = () => {
   const [people, setPeople] = useState([
     { id: '1', name: '', phone: '', amountOwed: '' },
     { id: '2', name: '', phone: '', amountOwed: '' },
+    { id: '3', name: '', phone: '', amountOwed: ''},
+    { id: '4', name: '', phone: '', amountOwed: ''}
   ]);
 
   const handleInputChange = (id: string, field: string, value: string) => {
@@ -17,7 +31,7 @@ const PaymentProcessingScreen = () => {
 
   // Use for backend that'll use an API to send messages to the user's phone number.
   const handleSendMessage = () => {
-    console.log('Send Message button clicked!'); // Placeholder for future functionality
+    console.log('Send Message button clicked!'); 
   };
 
   return (
@@ -43,6 +57,11 @@ const PaymentProcessingScreen = () => {
               onChangeText={(text) => handleInputChange(person.id, 'phone', text)}
             />
           </View>
+          {/* 
+          
+          
+          
+          */}
           <TextInput
             style={styles.amountInput}
             placeholder="$0.00"
@@ -51,9 +70,8 @@ const PaymentProcessingScreen = () => {
             onChangeText={(text) => handleInputChange(person.id, 'amountOwed', text)}
           />
         </View>
+        
       ))}
-
-      {/* Send Message Button */}
       <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
         <Text style={styles.buttonText}>Send Message</Text>
       </TouchableOpacity>
