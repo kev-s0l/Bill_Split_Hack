@@ -12,6 +12,7 @@ export default function Layout() {
         options={{headerTitle: 'Payment'}}
         />
     </Stack>
+    
 
   );
 }

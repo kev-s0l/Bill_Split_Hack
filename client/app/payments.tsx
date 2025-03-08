@@ -2,9 +2,6 @@
   This page will receive input from the 'Bill Page' 
     - Group Size: Determine how many boxes will be created 
     - Total Amount: Total amount of money from Bill, including Tip, Tax 
-    - 
-  
-  
   Need to do:
   - Connect the button to send messages (Adrian said this might not work)
   - Input size from 'Bill' page 
@@ -36,6 +33,20 @@ const PaymentProcessingScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* 
+        Total Bill: "$0.00"
+        We want to reduce the amount of money everytime we add values to a person's amount owed.
+        Ex:
+            Total Bill: $20.00, Group: 2
+            Person 1: Amount Owed: 15.00
+            Total Bill: $20.00 --> 5.00
+
+
+      */}
+      <View style={styles.header}>
+          <Text style={styles.header}>Total Bill: $0.00 -- CHANGE THIS </Text>
+      </View>
+
       {people.map((person) => (
         <View key={person.id} style={styles.card}>
           <Image
@@ -57,11 +68,6 @@ const PaymentProcessingScreen = () => {
               onChangeText={(text) => handleInputChange(person.id, 'phone', text)}
             />
           </View>
-          {/* 
-          
-          
-          
-          */}
           <TextInput
             style={styles.amountInput}
             placeholder="$0.00"
@@ -98,6 +104,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+},
   profilePic: {
     width: 50,
     height: 50,
