@@ -5,8 +5,14 @@ export default function Layout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ headerTitle: 'Bill Split' }} // Set title specifically for the index screen
+        options={{ headerTitle: '' }} // Set title specifically for the index screen
       />
+
+      <Stack.Screen
+        name = "payments"
+        options={{headerTitle: 'Payment'}}
+        />
     </Stack>
+    
   );
 }

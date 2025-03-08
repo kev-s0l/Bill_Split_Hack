@@ -7,7 +7,7 @@ export default function MenuScreen() {
   const [groupSizeInput, setGroupSizeInput] = useState('');
   const [tipAmount, setTipAmount] = useState('');
     
-  const tipOptions = [5, 10,15,20];
+  const tipOptions = [15, 18, 20, 'Custom'];
   const router = useRouter();
 
     const handlePress = () => {
@@ -19,12 +19,10 @@ export default function MenuScreen() {
         });
     };
     
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.header}>Bill Split Hack</Text>
-                
             </View>
             <TextInput
                 style={styles.input}
@@ -37,24 +35,13 @@ export default function MenuScreen() {
                 style={styles.input}
                 placeholder="Enter Group Size"
                 keyboardType="numeric"
-                value={numberInput}
-                onChangeText={setNumberInput}
+                value={groupSizeInput}
+                onChangeText={setGroupSizeInput}
             />
-                    {/* Tip Selection */}
-                    <Text style={styles.label}>Select Tip Percentage:</Text>
+            {/* Tip Selection */}
+            <Text style={styles.label}>Select Tip Percentage:</Text>
             <View style={styles.tipContainer}>
-                {tipOptions.map((tip) => (
-                    <TouchableOpacity
-                        key={tip}
-                        style={[
-                            styles.tipButton,
-                            parseInt(tipAmount) === tip && styles.selectedTipButton,
-                        ]}
-                        onPress={() => setTipAmount(tip)}
-                    >
-                        <Text style={styles.tipText}>{tip}%</Text>
-                    </TouchableOpacity>
-                ))}
+
             </View>
 
             {/* Submit Button */}
