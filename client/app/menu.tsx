@@ -10,7 +10,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     const [restaurantName, setRestaurantName] = useState("");
 
     // Tip Amounts we will use :3
-    const tipOptions = [15, 18, 20, 'Custom'];
+    const tipOptions = [15, 18, 20];
     const router = useRouter();
 
     // Aesthetics 
@@ -53,7 +53,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.header}>Bill Split Hack</Text>
+          <Text style={styles.header}>Cut the Bill</Text>
         </View>
         <TextInput
           style={styles.input}
@@ -88,6 +88,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
             >
               <Text style={styles.tipText}>{tip}%</Text>
             </TouchableOpacity>
+            
           ))}
         </View>
         <View style={styles.buttonContainer}>

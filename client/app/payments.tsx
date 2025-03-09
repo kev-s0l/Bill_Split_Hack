@@ -13,9 +13,16 @@ const PaymentProcessingScreen = () => {
   // Had problems here for some reason, when bringing the values over
   const billString = Array.isArray(bill) ? bill[0] : bill;
   const groupString = Array.isArray(group) ? group[0] : group;
+  const tipString = Array.isArray(chosenTip) ? chosenTip[0] : chosenTip;
   const totalBill = billString ? parseFloat(billString).toFixed(2) : '0.00';
   const groupSize = groupString ? parseInt(groupString, 10) : 1;
+  const totalTip = tipString ? parseInt(tipString).toFixed(2) : '0.00';
 
+  const fixBillAmount = () => {
+    const decimalTip = parseInt(totalTip) / 100;
+    const correctBillAmount = parseInt(totalBill) + (parseInt(totalBill) * decimalTip);
+    return correctBillAmount.toFixed(2);  // Returns the total bill amount formatted to two decimal places
+  };
   // Initialize people state based on group size
   const [people, setPeople] = useState(
     Array.from({ length: groupSize }, (_, index) => ({
@@ -55,7 +62,7 @@ const PaymentProcessingScreen = () => {
       {/* Total Bill Header */}
       <View style={styles.header}>
       <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}</Text>
-        <Text style={styles.headerText}>Total Bill: ${totalBill}</Text>
+        <Text style={styles.headerText}>Total Bill: ${fixBillAmount()}</Text>
         
       </View>
 
