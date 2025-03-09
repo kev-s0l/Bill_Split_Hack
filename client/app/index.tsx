@@ -27,13 +27,14 @@ export default function MenuScreen() {
     setGroupSizeInput(cleanedText ? `#${cleanedText}` : '');
   };
 
-  // Going to different pages for right now. Simple temp buttons
+  // Going to different pages for right now. Simple temp buttons 
+  // Passes values across to the different page we need it to go to.
   const goToPaymentsPage = () => {
     if (!numberInput || !groupSizeInput) {
       alert('Please enter both Bill Amount and Group Size.');
       return;
     }
-
+    // Recleaning the values, to be sent to the Payments Page
     const cleanBillSize = numberInput.replace('$', '');
     const cleanGroupSize = numberInput.replace('#', '');
 
