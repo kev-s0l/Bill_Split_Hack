@@ -1,22 +1,39 @@
-/* Payment Page
-  This page will receive input from the 'Bill Page' 
-    - Group Size: Determine how many boxes will be created 
-    - Total Amount: Total amount of money from Bill, including Tip, Tax 
-  Need to do:
-  - Connect the button to send messages (Adrian said this might not work)
-  - Input size from 'Bill' page 
-*/
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
-// Temporary People Stored for now
 const PaymentProcessingScreen = () => {
-  const [people, setPeople] = useState([
-    { id: '1', name: '', phone: '', amountOwed: '' },
-    { id: '2', name: '', phone: '', amountOwed: '' },
-    { id: '3', name: '', phone: '', amountOwed: ''},
-    { id: '4', name: '', phone: '', amountOwed: ''}
-  ]);
+  const { bill, group } = useLocalSearchParams();
+
+  // Ensure values are strings before using them
+  const billString = Array.isArray(bill) ? bill[0] : bill;
+  const groupString = Array.isArray(group) ? group[0] : group;
+
+  const totalBill = billString ? parseFloat(billString).toFixed(2) : '0.00';
+  const groupSize = groupString ? parseInt(groupString, 10) : 1;
+
+
+  // Initialize people state based on group size
+  // THIS DOES NOT WORK T_T
+  const [people, setPeople] = useState(
+    Array.from({ length: groupSize }, (_, index) => ({
+      id: (index + 1).toString(),
+      name: '',
+      phone: '',
+      amountOwed: '',
+    }))
+  );
+
+  useEffect(() => {
+    setPeople(
+      Array.from({ length: groupSize }, (_, index) => ({
+        id: (index + 1).toString(),
+        name: '',
+        phone: '',
+        amountOwed: '',
+      }))
+    );
+  }, [groupSize]); // Reinitialize when group size changes
 
   const handleInputChange = (id: string, field: string, value: string) => {
     setPeople((prevPeople) =>
@@ -26,33 +43,22 @@ const PaymentProcessingScreen = () => {
     );
   };
 
-  // Use for backend that'll use an API to send messages to the user's phone number.
+  // Handle sending messages (for backend integration)
   const handleSendMessage = () => {
-    console.log('Send Message button clicked!'); 
+    console.log('Send Message button clicked!', people);
   };
 
   return (
     <View style={styles.container}>
-      {/* 
-        Total Bill: "$0.00"
-        We want to reduce the amount of money everytime we add values to a person's amount owed.
-        Ex:
-            Total Bill: $20.00, Group: 2
-            Person 1: Amount Owed: 15.00
-            Total Bill: $20.00 --> 5.00
-
-
-      */}
+      {/* Total Bill Header */}
       <View style={styles.header}>
-          <Text style={styles.header}>Total Bill: $0.00 -- CHANGE THIS </Text>
+        <Text style={styles.headerText}>Total Bill: ${totalBill}</Text>
       </View>
 
+      {/* Dynamic Input Fields for Each Person */}
       {people.map((person) => (
         <View key={person.id} style={styles.card}>
-          <Image
-            source={require('@/assets/images/no_profile.jpg')}
-            style={styles.profilePic}
-          />
+          <Image source={require('@/assets/images/no_profile.jpg')} style={styles.profilePic} />
           <View style={styles.info}>
             <TextInput
               style={styles.input}
@@ -76,8 +82,9 @@ const PaymentProcessingScreen = () => {
             onChangeText={(text) => handleInputChange(person.id, 'amountOwed', text)}
           />
         </View>
-        
       ))}
+
+      {/* Send Message Button */}
       <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
         <Text style={styles.buttonText}>Send Message</Text>
       </TouchableOpacity>
@@ -90,6 +97,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8f9fa',
     padding: 20,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
   card: {
     flexDirection: 'row',
@@ -104,12 +120,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
-},
   profilePic: {
     width: 50,
     height: 50,
