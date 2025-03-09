@@ -13,7 +13,11 @@ export default function Layout() {
       />
       <Stack.Screen
         name="menu"
-        options={{ headerTitle: 'Insert Bill', headerShown: true }}  
+        options={{ headerTitle: 'Insert Bill', headerShown: false }}  
+      />
+      <Stack.Screen
+        name="sign_up"
+        options={{ headerTitle: '', headerTransparent: true}}  
       />
     </Stack>
   );
