@@ -49,7 +49,7 @@ export default function LoginScreen() {
 
         <Text style={styles.footer}>
           Already have an account?{' '}
-          <Pressable onPress={() => router.push('/index' as any)}>
+          <Pressable onPress={() => router.push('/')}>
             <Text style={styles.link}>Login</Text>
           </Pressable>
         </Text>  
