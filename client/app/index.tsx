@@ -1,16 +1,13 @@
-import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { useRouter } from 'expo-router';  
 
-export default function MenuScreen() {
-  const [numberInput, setNumberInput] = useState('');
-  const [groupSizeInput, setGroupSizeInput] = useState('');
-  const [tipAmount, setTipAmount] = useState('');
-    
-  const tipOptions = [15, 18, 20, 'Custom'];
-  const router = useRouter();
 
-  // Cleaning Amount Value, and for asthetics include a "$"
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();  
+
   const handleTotalBillChange = (text: string) => {
     let cleanedText = text.replace(/[^0-9.]/g, '');
 
@@ -19,7 +16,6 @@ export default function MenuScreen() {
     }
     setNumberInput(cleanedText ? `$${cleanedText}` : '');
   };
-  // Cleaning Group Size, and for asthetics include a "#"
 
   const handleGroupInputChange = (text: string) => {
     let cleanedText = text.replace(/[^0-9.]/g, '');
@@ -27,25 +23,11 @@ export default function MenuScreen() {
     setGroupSizeInput(cleanedText ? `#${cleanedText}` : '');
   };
 
-  // Going to different pages for right now. Simple temp buttons 
-  // Passes values across to the different page we need it to go to.
-  const goToPaymentsPage = () => {
-    if (!numberInput || !groupSizeInput) {
-      alert('Please enter both Bill Amount and Group Size.');
-      return;
-    }
-    // Recleaning the values, to be sent to the Payments Page
-    const cleanBillSize = numberInput.replace('$', '');
-    const cleanGroupSize = numberInput.replace('#', '');
-
-    router.push({
-        pathname: '/payments',
-        params: {
-            bill: cleanBillSize,
-            groupSize: cleanGroupSize,
-        },
-    });
-  };
+    const goToPaymentsPage = () => {
+        router.push({
+            pathname: '/payments',
+        });
+    };
 
     const goToUserLogin = () => {
         router.push({
@@ -54,7 +36,6 @@ export default function MenuScreen() {
     };
     
     return (
-        // Header
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.header}>Bill Split Hack</Text>
@@ -73,12 +54,10 @@ export default function MenuScreen() {
                 value={groupSizeInput}
                 onChangeText={handleGroupInputChange}
                 />
-
             {/* Tip Selection */}
             <Text style={styles.label}>Select Tip Percentage:</Text>
             <View style={styles.tipContainer}>
-            
-            
+
             </View>
 
             {/* Submit Button */}
@@ -86,7 +65,7 @@ export default function MenuScreen() {
                 <Button title="SUBMIT" onPress={goToPaymentsPage} color="#28a745" />
             </View>
             <View style={styles.buttonContainer}>
-                <Button title="User Login Page TEMP" onPress={goToUserLogin} color="#28a745" />
+                <Button title="User Login Page" onPress={goToUserLogin} color="#28a745" />
             </View>
         </View>
     );
@@ -114,6 +93,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingLeft: 10,
         marginBottom: 15,
+        textAlign: 'center',
         fontSize: 16,
     },
     label: {

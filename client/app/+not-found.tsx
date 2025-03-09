@@ -15,6 +15,9 @@ export default function NotFoundScreen() {
         <Link href="/" style={styles.link}>
           <ThemedText type="link">Go to home screen!</ThemedText>
         </Link>
+        <Link href="/" style={styles.link}>
+          <ThemedText type="link">Go to Menu!</ThemedText>
+        </Link>
       </ThemedView>
     </>
   );
