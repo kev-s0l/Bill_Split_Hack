@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
-import { useRouter } from 'expo-router';  
-
+import { View, TextInput, Button, StyleSheet, Text, Pressable } from 'react-native';
+import { useRouter } from 'expo-router'; 
+import { LinearGradient } from 'expo-linear-gradient';  
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -13,67 +13,93 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Login</Text>
+    <LinearGradient
+      colors={['#EA8D8D', '#A890FE']}
+      style={styles.gradient}
+    >
+      
+        <Text style={styles.header}>Login</Text>
 
-      <TextInput
-        // NEED TO VERIFY THIS EMAIL
-        style={styles.input}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your password"
-        // NEED TO VERIFY THIS PASSWORD.
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+      <Pressable style={styles.buttonContainer} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
 
-      <Button title="Login" onPress={handleLogin} color="#28a745" />
-
-      <Text style={styles.footer}>
-        Don't have an account? <Text style={styles.link}>Sign Up</Text>
-        {/* THIS NEEDS TO DO SOMETHING */}
-      </Text>
-    </View>
+        <Text style={styles.footer}>
+          Don't have an account?{' '}
+          <Pressable onPress={() => router.push('/sign_up' as any)}>
+            <Text style={styles.link}>Sign Up</Text>
+          </Pressable>
+        </Text>  
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  gradient: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 0,
+  },
+  container: {
+    width: '90%', 
     padding: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 15,
+    alignItems: 'center',
   },
   header: {
-    fontSize: 30,
+    fontSize: 60,
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#333',
   },
   input: {
-    height: 40,
-    width: '80%',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
+    height: 50,
+    width: '50%',
+    borderColor: '#000000',
+    borderWidth: 2,
+    borderRadius: 20,
     marginBottom: 20,
     paddingLeft: 10,
-    fontSize: 16,
+    fontSize: 18,
   },
   footer: {
     marginTop: 20,
     fontSize: 16,
-    color: '#333',
+    color: '#FFFF',
   },
   link: {
-    color: '#28a745',
+    color: '#5D3FD3',
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    width: "50%",
+    backgroundColor: "#5D3FD3",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    marginVertical: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

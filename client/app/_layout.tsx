@@ -5,20 +5,16 @@ export default function Layout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ headerTitle: '' }} // Set title specifically for the index screen
+        options={{ headerTitle: '',  headerShown: false }}  
       />
       <Stack.Screen
-        name = "payments"
-        options={{headerTitle: 'Payment'}}
-        />
+        name="payments"
+        options={{ headerTitle: 'Payment'}}  
+      />
       <Stack.Screen
-        name = "user_login"
-        options={{headerTitle: 'Login Page'}}
-        />
-      <Stack.Screen
-        name = "menu"
-        options={{headerTitle: 'Insert Bill'}}
-        />
+        name="menu"
+        options={{ headerTitle: 'Insert Bill', headerShown: false }}  
+      />
     </Stack>
   );
 }

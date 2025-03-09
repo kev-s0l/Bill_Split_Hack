@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';  // Importing LinearGradient
 
 const PaymentProcessingScreen = () => {
   const { bill, group, restaurant_Name, chosenTip } = useLocalSearchParams();
@@ -18,6 +19,7 @@ const PaymentProcessingScreen = () => {
     const correctBillAmount = parseInt(totalBill) + (parseInt(totalBill) * decimalTip);
     return correctBillAmount.toFixed(2);  // Returns the total bill amount formatted to two decimal places
   };
+
   // Initialize people state based on group size
   const [people, setPeople] = useState(
     Array.from({ length: groupSize }, (_, index) => ({
@@ -42,28 +44,28 @@ const PaymentProcessingScreen = () => {
   const handleInputChange = (id: string, field: string, value: string) => {
     let cleanedValue = value;
 
-      if (field === 'name') {
-        cleanedValue = value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters and spaces
-      } else if (field === 'email') {
-        cleanedValue = value.replace(/[^a-zA-Z0-9@._-]/g, ''); // Allow valid email characters
-      } else if (field === 'amountOwed') {
-        // Remove all non-numeric characters
-        cleanedValue = value.replace(/\D/g, '');
+    if (field === 'name') {
+      cleanedValue = value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters and spaces
+    } else if (field === 'email') {
+      cleanedValue = value.replace(/[^a-zA-Z0-9@._-]/g, ''); // Allow valid email characters
+    } else if (field === 'amountOwed') {
+      // Remove all non-numeric characters
+      cleanedValue = value.replace(/\D/g, '');
 
-        // Remove leading zeros (if any)
-        cleanedValue = cleanedValue.replace(/^0+/, '');
+      // Remove leading zeros (if any)
+      cleanedValue = cleanedValue.replace(/^0+/, '');
 
-        if (cleanedValue.length === 0) {
-          cleanedValue = ''; // Empty field if nothing is entered
-        } else if (cleanedValue.length === 1) {
-          cleanedValue = `0.0${cleanedValue}`; // "5" → "0.05"
-        } else if (cleanedValue.length === 2) {
-          cleanedValue = `0.${cleanedValue}`; // "75" → "0.75"
-        } else {
-          // Insert decimal before last two digits
-          cleanedValue = `${cleanedValue.slice(0, -2)}.${cleanedValue.slice(-2)}`;
-        }
+      if (cleanedValue.length === 0) {
+        cleanedValue = ''; // Empty field if nothing is entered
+      } else if (cleanedValue.length === 1) {
+        cleanedValue = `0.0${cleanedValue}`; // "5" → "0.05"
+      } else if (cleanedValue.length === 2) {
+        cleanedValue = `0.${cleanedValue}`; // "75" → "0.75"
+      } else {
+        // Insert decimal before last two digits
+        cleanedValue = `${cleanedValue.slice(0, -2)}.${cleanedValue.slice(-2)}`;
       }
+    }
 
     setPeople((prevPeople) =>
       prevPeople.map((person) =>
@@ -71,65 +73,72 @@ const PaymentProcessingScreen = () => {
       )
     );
   };
-  
+
   // Handle sending messages (for backend integration)
   const handleSendMessage = () => {
     console.log('Send Message button clicked!', people);
   };
 
   return (
-    <View style={styles.container}>
-      {/* Total Bill Header */}
-      <View style={styles.header}>
-      <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}{}</Text>
-        <Text style={styles.headerText}>Total Bill: ${fixBillAmount()}</Text>
-        
-      </View>
+    // Wrap the whole container in a LinearGradient
+    <LinearGradient
+      colors={['#EA8D8D', '#A890FE']}  // Choose gradient colors
+      style={styles.gradient} // Ensure the gradient takes up full screen
+    >
+      <View style={styles.container}>
+        {/* Total Bill Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}{}</Text>
+          <Text style={styles.headerText}>Total Bill: ${fixBillAmount()}</Text>
+        </View>
 
-      {/* Dynamic Input Fields for Each Person */}
-      {people.map((person) => (
-        <View key={person.id} style={styles.card}>
-          <Image source={require('@/assets/images/no_profile.jpg')} style={styles.profilePic} />
-          <View style={styles.info}>
+        {/* Dynamic Input Fields for Each Person */}
+        {people.map((person) => (
+          <View key={person.id} style={styles.card}>
+            <Image source={require('@/assets/images/no_profile.jpg')} style={styles.profilePic} />
+            <View style={styles.info}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Name"
+                value={person.name}
+                onChangeText={(text) => handleInputChange(person.id, 'name', text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Email"
+                value={person.phone}
+                onChangeText={(text) => handleInputChange(person.id, 'phone', text)}
+              />
+            </View>
             <TextInput
-              style={styles.input}
-              placeholder="Enter Name"
-              value={person.name}
-              onChangeText={(text) => handleInputChange(person.id, 'name', text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Enter Email"
-              value={person.phone}
-              onChangeText={(text) => handleInputChange(person.id, 'phone', text)}
+              style={styles.amountInput}
+              placeholder="$0.00"
+              keyboardType="numeric"
+              value={person.amountOwed}
+              onChangeText={(text) => handleInputChange(person.id, 'amountOwed', text)}
             />
           </View>
-          <TextInput
-            style={styles.amountInput}
-            placeholder="$0.00"
-            keyboardType="numeric"
-            value={person.amountOwed}
-            onChangeText={(text) => handleInputChange(person.id, 'amountOwed', text)}
-          />
-        </View>
-      ))}
+        ))}
 
-      {/* Send Message Button */}
-      <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
-        <Text style={styles.buttonText}>Send Message</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Send Message Button */}
+        <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
+          <Text style={styles.buttonText}>Send Message</Text>
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,  // Ensure the gradient takes up the full screen
+  },
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: 'transparent',  // Make sure the background is transparent so the gradient shows
     padding: 20,
   },
   header: {
-
     flexDirection: "column", // Align buttons horizontally
     justifyContent: "center", // Center them
     alignItems: "center",
@@ -177,7 +186,7 @@ const styles = StyleSheet.create({
     color: '#dc3545',
   },
   button: {
-    backgroundColor: '#28a745', // Green button
+    backgroundColor: '#5D3FD3', // Green button
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
