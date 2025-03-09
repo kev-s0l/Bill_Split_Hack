@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Pressable } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, Pressable, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router'; 
 import { LinearGradient } from 'expo-linear-gradient';  
 
@@ -31,6 +31,14 @@ export default function LoginScreen() {
         <TextInput
           style={styles.input}
           placeholder="Enter your password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm your password"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 2,
     borderRadius: 20,
-    backgroundColor:"#cccc",    
+    backgroundColor:"#FFFFFF",    
     marginBottom: 20,
     paddingLeft: 10,
     fontSize: 18,

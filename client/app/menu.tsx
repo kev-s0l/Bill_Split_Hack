@@ -57,7 +57,7 @@ export default function MenuScreen() {
     >
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.header}>Cut the Bill</Text>
+          <Text style={styles.header}>Cut The Cake</Text>
         </View>
         <TextInput
           style={styles.input}
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderColor: "#00",
     borderWidth: 2,
     borderRadius: 10,
-    backgroundColor:"#ccc",
+    backgroundColor:"#fff",
     marginBottom: 30,
     fontSize: 20,
   },
