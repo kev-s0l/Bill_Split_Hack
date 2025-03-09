@@ -10,9 +10,30 @@ export default function MenuScreen() {
   const tipOptions = [15, 18, 20, 'Custom'];
   const router = useRouter();
 
-    const handlePress = () => {
+  const handleTotalBillChange = (text: string) => {
+    let cleanedText = text.replace(/[^0-9.]/g, '');
+
+    if ((cleanedText.match(/\./g) || []).length > 1) {
+      return;
+    }
+    setNumberInput(cleanedText ? `$${cleanedText}` : '');
+  };
+
+  const handleGroupInputChange = (text: string) => {
+    let cleanedText = text.replace(/[^0-9.]/g, '');
+
+    setGroupSizeInput(cleanedText ? `#${cleanedText}` : '');
+  };
+
+    const goToPaymentsPage = () => {
         router.push({
             pathname: '/payments',
+        });
+    };
+
+    const goToUserLogin = () => {
+        router.push({
+            pathname: '/user_login',
         });
     };
     
@@ -26,15 +47,15 @@ export default function MenuScreen() {
                 placeholder="Enter Total Bill"
                 keyboardType="numeric"
                 value={numberInput}
-                onChangeText={setNumberInput}
-            />
+                onChangeText={handleTotalBillChange}
+                />
             <TextInput
                 style={styles.input}
                 placeholder="Enter Group Size"
                 keyboardType="numeric"
                 value={groupSizeInput}
-                onChangeText={setGroupSizeInput}
-            />
+                onChangeText={handleGroupInputChange}
+                />
             {/* Tip Selection */}
             <Text style={styles.label}>Select Tip Percentage:</Text>
             <View style={styles.tipContainer}>
@@ -43,7 +64,10 @@ export default function MenuScreen() {
 
             {/* Submit Button */}
             <View style={styles.buttonContainer}>
-                <Button title="SUBMIT" onPress={handlePress} color="#28a745" />
+                <Button title="SUBMIT" onPress={goToPaymentsPage} color="#28a745" />
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button title="User Login Page" onPress={goToUserLogin} color="#28a745" />
             </View>
         </View>
     );
