@@ -5,15 +5,15 @@ export default function Layout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ headerTitle: '',  headerShown: false }}  
+        options={{ headerTitle: '', headerTransparent: true}}  
       />
       <Stack.Screen
         name="payments"
-        options={{ headerTitle: 'Payment'}}  
+        options={{ headerTitle: 'Payment', headerTransparent: true}}  
       />
       <Stack.Screen
         name="menu"
-        options={{ headerTitle: 'Insert Bill', headerShown: false }}  
+        options={{ headerTitle: 'Insert Bill', headerShown: true }}  
       />
     </Stack>
   );

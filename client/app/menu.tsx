@@ -11,7 +11,7 @@ export default function MenuScreen() {
   const [restaurantName, setRestaurantName] = useState("");
 
   // Tip Amounts we will use :3
-  const tipOptions = [15, 18, 20];
+  const tipOptions = [15, 18, 20, 25];
   const router = useRouter();
 
   // Aesthetics 
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     borderColor: "#00",
     borderWidth: 2,
     borderRadius: 10,
+    backgroundColor:"#ccc",
     marginBottom: 30,
     fontSize: 20,
   },
