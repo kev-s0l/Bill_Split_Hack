@@ -3,20 +3,17 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
   import { useState } from "react";
   
   export default function MenuScreen() {
-    
+    // Information We Will be Updating
     const [numberInput, setNumberInput] = useState("");
     const [groupSizeInput, setGroupSizeInput] = useState("");
     const [tipAmount, setTipAmount] = useState("");
-  
-    const tipOptions = [10, 15, 20, 'Custom'];
-    const router = useRouter();
-  
-    const handlePress = () => {
-      router.push({
-        pathname: "/payments"
-      });
-    };
+    const [restaurantName, setRestaurantName] = useState("");
 
+    // Tip Amounts we will use :3
+    const tipOptions = [15, 18, 20, 'Custom'];
+    const router = useRouter();
+
+    // Aesthetics 
     const handleTotalBillChange = (text: string) => {
         // Remove non-numeric characters (except decimal point)
         let cleanedText = text.replace(/[^0-9.]/g, '');
@@ -37,21 +34,31 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
         setGroupSizeInput(clearText ? `#${clearText}` : '');
       };
     
-      const MenuInfo = () => {
-        return {
-            params: {
-                totalBill: numberInput, 
-                groupSize: groupSizeInput, 
-                tip: tipAmount
-              }
-        };
-      };
+      const goToPaymentsPage = () => {
+        const cleanedBill = numberInput.replace('$', '');
+        const cleanedGroupSize = groupSizeInput.replace('#', '');
     
+        router.push({
+            pathname: '/payments',
+            params: {
+                bill: cleanedBill,
+                group: cleanedGroupSize
+            }
+        });
+    };
+
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.header}>Bill Split Hack</Text>
         </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Restaurant Name"
+          value={restaurantName}
+          onChangeText={setRestaurantName}
+        />
         <TextInput
           style={styles.input}
           placeholder="Enter Total Bill"
@@ -82,7 +89,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
           ))}
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="SUBMIT" onPress={handlePress} color="#28a745" />
+          <Button title="SUBMIT" onPress={goToPaymentsPage} color="#28a745" />
         </View>
       </View>
     );
@@ -109,7 +116,6 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
       borderWidth: 1,
       borderRadius: 10,
       marginBottom: 20,
-      textAlign: "center",
       fontSize: 16,
     },
     label: {

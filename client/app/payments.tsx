@@ -12,9 +12,7 @@ const PaymentProcessingScreen = () => {
   const totalBill = billString ? parseFloat(billString).toFixed(2) : '0.00';
   const groupSize = groupString ? parseInt(groupString, 10) : 1;
 
-
   // Initialize people state based on group size
-  // THIS DOES NOT WORK T_T
   const [people, setPeople] = useState(
     Array.from({ length: groupSize }, (_, index) => ({
       id: (index + 1).toString(),
