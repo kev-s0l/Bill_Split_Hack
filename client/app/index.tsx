@@ -10,50 +10,64 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     const tipOptions = [5, 10, 15, 20];
     const router = useRouter();
   
-    const handlePress = () => {
+  const handleTotalBillChange = (text: string) => {
+    let cleanedText = text.replace(/[^0-9.]/g, '');
+
+    if ((cleanedText.match(/\./g) || []).length > 1) {
+      return;
+    }
+    setNumberInput(cleanedText ? `$${cleanedText}` : '');
+  };
+
+  const handleGroupInputChange = (text: string) => {
+    let cleanedText = text.replace(/[^0-9.]/g, '');
+
+    setGroupSizeInput(cleanedText ? `#${cleanedText}` : '');
+  };
+
+    const goToPaymentsPage = () => {
       router.push({
         pathname: "/payments"
       });
     };
+
+    const goToUserLogin = () => {
+        router.push({
+            pathname: '/user_login',
+        });
+    };
+    
   
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.header}>Bill Split Hack</Text>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.header}>Bill Split Hack</Text>
+            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Total Bill"
+                keyboardType="numeric"
+                value={numberInput}
+                onChangeText={setNumberInput}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Group Size"
+                keyboardType="numeric"
+                value={groupSizeInput}
+                onChangeText={setGroupSizeInput}
+            />
+            {/* Tip Selection */}
+            <Text style={styles.label}>Select Tip Percentage:</Text>
+            <View style={styles.tipContainer}>
+
+            </View>
+
+            {/* Submit Button */}
+            <View style={styles.buttonContainer}>
+                <Button title="SUBMIT" onPress={handlePress} color="#28a745" />
+            </View>
         </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Total Bill"
-          keyboardType="numeric"
-          value={numberInput}
-          onChangeText={setNumberInput}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Group Size"
-          keyboardType="numeric"
-          value={groupSizeInput}
-          onChangeText={setGroupSizeInput}
-        />
-        <Text style={styles.label}>Select Tip Percentage:</Text>
-        <View style={styles.tipsRow}>
-          {tipOptions.map((tip) => (
-            <TouchableOpacity
-              key={tip}
-              style={[
-                styles.tipButton,
-                tipAmount === tip.toString() && styles.selectedTip, // Highlight selected tip
-              ]}
-              onPress={() => setTipAmount(tip.toString())}
-            >
-              <Text style={styles.tipText}>{tip}%</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button title="SUBMIT" onPress={handlePress} color="#28a745" />
-        </View>
-      </View>
     );
   }
   

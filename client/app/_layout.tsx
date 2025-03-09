@@ -11,6 +11,11 @@ export default function Layout() {
         name = "payments"
         options={{headerTitle: 'Payment'}}
         />
+
+      <Stack.Screen
+        name = "user_login"
+        options={{headerTitle: 'Login Page'}}
+        />
     </Stack>
     
 
