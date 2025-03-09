@@ -5,11 +5,6 @@ import { useLocalSearchParams } from 'expo-router';
 const PaymentProcessingScreen = () => {
   const { bill, group, restaurant_Name, chosenTip } = useLocalSearchParams();
 
-  /* need to do:
-    - Use Chosen Tip to Fix bill amount!!!
-    - put distance between restaurant name and total bill value
-  */
-
   // Had problems here for some reason, when bringing the values over
   const billString = Array.isArray(bill) ? bill[0] : bill;
   const groupString = Array.isArray(group) ? group[0] : group;
@@ -47,29 +42,29 @@ const PaymentProcessingScreen = () => {
   const handleInputChange = (id: string, field: string, value: string) => {
     let cleanedValue = value;
 
-  if (field === 'name') {
-    cleanedValue = value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters and spaces
-  } else if (field === 'phone') {
-    cleanedValue = value.replace(/\D/g, '').slice(0, 10); // Remove non-digits and limit to 10 digits
-  } else if (field === 'amountOwed') {
-    // Remove all non-numeric characters
-    cleanedValue = value.replace(/\D/g, '');
+      if (field === 'name') {
+        cleanedValue = value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters and spaces
+      } else if (field === 'email') {
+        cleanedValue = value.replace(/[^a-zA-Z0-9@._-]/g, ''); // Allow valid email characters
+      } else if (field === 'amountOwed') {
+        // Remove all non-numeric characters
+        cleanedValue = value.replace(/\D/g, '');
 
-    // Remove leading zeros (if any)
-    cleanedValue = cleanedValue.replace(/^0+/, '');
+        // Remove leading zeros (if any)
+        cleanedValue = cleanedValue.replace(/^0+/, '');
 
-    if (cleanedValue.length === 0) {
-      cleanedValue = ''; // Empty field if nothing is entered
-    } else if (cleanedValue.length === 1) {
-      cleanedValue = `0.0${cleanedValue}`; // "5" → "0.05"
-    } else if (cleanedValue.length === 2) {
-      cleanedValue = `0.${cleanedValue}`; // "75" → "0.75"
-    } else {
-      // Insert decimal before last two digits
-      cleanedValue = `${cleanedValue.slice(0, -2)}.${cleanedValue.slice(-2)}`;
-    }
-  }
-  
+        if (cleanedValue.length === 0) {
+          cleanedValue = ''; // Empty field if nothing is entered
+        } else if (cleanedValue.length === 1) {
+          cleanedValue = `0.0${cleanedValue}`; // "5" → "0.05"
+        } else if (cleanedValue.length === 2) {
+          cleanedValue = `0.${cleanedValue}`; // "75" → "0.75"
+        } else {
+          // Insert decimal before last two digits
+          cleanedValue = `${cleanedValue.slice(0, -2)}.${cleanedValue.slice(-2)}`;
+        }
+      }
+
     setPeople((prevPeople) =>
       prevPeople.map((person) =>
         person.id === id ? { ...person, [field]: cleanedValue } : person
@@ -77,7 +72,6 @@ const PaymentProcessingScreen = () => {
     );
   };
   
-
   // Handle sending messages (for backend integration)
   const handleSendMessage = () => {
     console.log('Send Message button clicked!', people);
@@ -105,8 +99,7 @@ const PaymentProcessingScreen = () => {
             />
             <TextInput
               style={styles.input}
-              placeholder="Enter Phone"
-              keyboardType="phone-pad"
+              placeholder="Enter Email"
               value={person.phone}
               onChangeText={(text) => handleInputChange(person.id, 'phone', text)}
             />

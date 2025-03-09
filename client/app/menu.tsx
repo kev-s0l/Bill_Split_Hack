@@ -10,7 +10,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     const [restaurantName, setRestaurantName] = useState("");
 
     // Tip Amounts we will use :3
-    const tipOptions = [15, 18, 20];
+    const tipOptions = [15, 18, 20, 'Custom'];
     const router = useRouter();
 
     // Aesthetics 
@@ -88,7 +88,6 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
             >
               <Text style={styles.tipText}>{tip}%</Text>
             </TouchableOpacity>
-            
           ))}
         </View>
         <View style={styles.buttonContainer}>
@@ -114,8 +113,6 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     },
     input: {
       height: 40,
-      justifyContent: "center",
-      alignItems: "center",
       width: "60%",
       borderColor: "#ccc",
       borderWidth: 1,
@@ -152,7 +149,6 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     buttonContainer: {
       width: "50%",
       marginVertical: 15,
-
     },
   });
   
