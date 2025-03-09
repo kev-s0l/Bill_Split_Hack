@@ -38,12 +38,38 @@ const PaymentProcessingScreen = () => {
   }, [groupSize]); // Reinitialize when group size changes
 
   const handleInputChange = (id: string, field: string, value: string) => {
+    let cleanedValue = value;
+
+  if (field === 'name') {
+    cleanedValue = value.replace(/[^A-Za-z\s]/g, ''); // Allow only letters and spaces
+  } else if (field === 'phone') {
+    cleanedValue = value.replace(/\D/g, '').slice(0, 10); // Remove non-digits and limit to 10 digits
+  } else if (field === 'amountOwed') {
+    // Remove all non-numeric characters
+    cleanedValue = value.replace(/\D/g, '');
+
+    // Remove leading zeros (if any)
+    cleanedValue = cleanedValue.replace(/^0+/, '');
+
+    if (cleanedValue.length === 0) {
+      cleanedValue = ''; // Empty field if nothing is entered
+    } else if (cleanedValue.length === 1) {
+      cleanedValue = `0.0${cleanedValue}`; // "5" → "0.05"
+    } else if (cleanedValue.length === 2) {
+      cleanedValue = `0.${cleanedValue}`; // "75" → "0.75"
+    } else {
+      // Insert decimal before last two digits
+      cleanedValue = `${cleanedValue.slice(0, -2)}.${cleanedValue.slice(-2)}`;
+    }
+  }
+  
     setPeople((prevPeople) =>
       prevPeople.map((person) =>
-        person.id === id ? { ...person, [field]: value } : person
+        person.id === id ? { ...person, [field]: cleanedValue } : person
       )
     );
   };
+  
 
   // Handle sending messages (for backend integration)
   const handleSendMessage = () => {
