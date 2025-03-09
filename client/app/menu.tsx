@@ -114,6 +114,8 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     },
     input: {
       height: 40,
+      justifyContent: "center",
+      alignItems: "center",
       width: "60%",
       borderColor: "#ccc",
       borderWidth: 1,
@@ -150,6 +152,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     buttonContainer: {
       width: "50%",
       marginVertical: 15,
+
     },
   });
   

@@ -87,7 +87,7 @@ const PaymentProcessingScreen = () => {
     <View style={styles.container}>
       {/* Total Bill Header */}
       <View style={styles.header}>
-      <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}</Text>
+      <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}{}</Text>
         <Text style={styles.headerText}>Total Bill: ${fixBillAmount()}</Text>
         
       </View>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   header: {
 
-    flexDirection: "row", // Align buttons horizontally
+    flexDirection: "column", // Align buttons horizontally
     justifyContent: "center", // Center them
     alignItems: "center",
     marginBottom: 15,
