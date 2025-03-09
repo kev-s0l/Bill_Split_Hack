@@ -3,12 +3,16 @@ import { View, TextInput, Image, StyleSheet, Text, TouchableOpacity } from 'reac
 import { useLocalSearchParams } from 'expo-router';
 
 const PaymentProcessingScreen = () => {
-  const { bill, group } = useLocalSearchParams();
+  const { bill, group, restaurant_Name, chosenTip } = useLocalSearchParams();
 
-  // Ensure values are strings before using them
+  /* need to do:
+    - Use Chosen Tip to Fix bill amount!!!
+    - put distance between restaurant name and total bill value
+  */
+
+  // Had problems here for some reason, when bringing the values over
   const billString = Array.isArray(bill) ? bill[0] : bill;
   const groupString = Array.isArray(group) ? group[0] : group;
-
   const totalBill = billString ? parseFloat(billString).toFixed(2) : '0.00';
   const groupSize = groupString ? parseInt(groupString, 10) : 1;
 
@@ -50,7 +54,9 @@ const PaymentProcessingScreen = () => {
     <View style={styles.container}>
       {/* Total Bill Header */}
       <View style={styles.header}>
+      <Text style={styles.headerText}>Restaurant Name: {restaurant_Name}</Text>
         <Text style={styles.headerText}>Total Bill: ${totalBill}</Text>
+        
       </View>
 
       {/* Dynamic Input Fields for Each Person */}
@@ -97,7 +103,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    alignItems: 'center',
+
+    flexDirection: "row", // Align buttons horizontally
+    justifyContent: "center", // Center them
+    alignItems: "center",
     marginBottom: 15,
   },
   headerText: {

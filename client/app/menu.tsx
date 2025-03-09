@@ -33,7 +33,7 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
     
         setGroupSizeInput(clearText ? `#${clearText}` : '');
       };
-    
+      // send over info to payments page to update values!!!
       const goToPaymentsPage = () => {
         const cleanedBill = numberInput.replace('$', '');
         const cleanedGroupSize = groupSizeInput.replace('#', '');
@@ -42,7 +42,9 @@ import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "rea
             pathname: '/payments',
             params: {
                 bill: cleanedBill,
-                group: cleanedGroupSize
+                group: cleanedGroupSize,
+                restaurant_Name: restaurantName,
+                chosenTip: tipAmount
             }
         });
     };
